@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lendings', function (Blueprint $table) {
-            $table->primary(['user_id', 'copy_id', 'start']);
+        Schema::create('reservations', function (Blueprint $table) {
+            $table->primary(['book_id', 'user_id', 'start']);
+            $table->foreignId('book_id')->references('book_id')->on('books');
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('copy_id')->references('copy_id')->on('copies');
             $table->date('start');
-            $table->date('end');
-            $table->tinyInteger('extension');
-            $table->integer('notice');
+            $table->tinyInteger('message');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lendings');
+        Schema::dropIfExists('reservations');
     }
 };
